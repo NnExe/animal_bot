@@ -1,1 +1,0 @@
-worker: python animal_bot.py

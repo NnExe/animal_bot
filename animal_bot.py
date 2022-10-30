@@ -1,5 +1,3 @@
-# kittybot/kittybot.py
-
 import logging
 import os
 
@@ -12,14 +10,13 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-secret_token = os.getenv('TOKEN')
+secret_token = os.getenv('TOKEN', default='123')
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     level=logging.INFO)
 
 
-URL = 'https://api.thecatapi.com/v1/images/search'
 CAT_URL = 'https://api.thecatapi.com/v1/images/search'
 DOG_URL = 'https://api.thedogapi.com/v1/images/search'
 
@@ -28,9 +25,6 @@ def get_new_image(URL):
     try:
         response = requests.get(URL)
     except Exception as error:
-        # Печатать информацию в консоль теперь не нужно:
-        # всё необходимое будет в логах
-        # print(error)
         logging.error(f'Ошибка при запросе к основному API: {error}')
         new_url = 'https://api.thedogapi.com/v1/images/search'
         response = requests.get(new_url)
@@ -60,7 +54,7 @@ def wake_up(update, context):
     button = ReplyKeyboardMarkup([['/newcat', '/newdog']], resize_keyboard=True)
     context.bot.send_message(
         chat_id=chat.id,
-        text=f'Привет, {name}. Посмотри какого котика я тебе нашел',
+        text=f'Привет, {name}. Посмотри, какого котика я тебе нашел!',
         reply_markup=button
     )
     image = get_new_image()
