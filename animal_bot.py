@@ -17,8 +17,8 @@ logging.basicConfig(
     level=logging.INFO)
 
 
-CAT_URL = 'https://api.thecatapi.com/v1/images/search'
-DOG_URL = 'https://api.thedogapi.com/v1/images/search'
+CAT_URL = os.getenv('CAT_URL', default='https://api.thecatapi.com/v1/images/search')
+DOG_URL = os.getenv('DOG_URL', default='https://api.thedogapi.com/v1/images/search')
 
 
 def get_new_image(URL):
